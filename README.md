@@ -1,10 +1,10 @@
 # UDP Server component for esp-idf
 
-Send & Receive UDP messages on default event loop.
+Send & Receive messages on default event loop.
 
 ## Usage
 
-### Init & Deinie
+### Init & Deinit
 
 ```c
 #include "htpad_server.h"
