@@ -2,5 +2,5 @@ description: 'Get start for UDP server'
 dependencies:
   idf: '>=5.0'
   larryli/udp_server:
-    version: '^1'
+    version: '*'
     override_path: '../../../'

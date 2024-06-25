@@ -4,6 +4,3 @@ repository: https://github.com/larryli/esp-idf_udp_server.git
 license: 'MIT'
 dependencies:
   idf: '>=5.0'
-files:
-  exclude:
-    - 'examples/**/*'
