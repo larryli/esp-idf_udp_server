@@ -8,5 +8,3 @@ dependencies:
 files:
   exclude:
     - 'examples/**/*'
-examples:
-  - path: 'examples/get_start'
