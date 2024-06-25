@@ -2,7 +2,7 @@ name: Push component to https://components.espressif.com
 on:
   push:
     tags:
-      - *
+      - '*'
 
 jobs:
   upload_components:
