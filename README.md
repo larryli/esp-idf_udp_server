@@ -2,7 +2,9 @@
 
 Send & Receive messages on default event loop.
 
-## Usage
+## Installation
+
+## Getting Started
 
 ### Init & Deinit
 
@@ -22,7 +24,7 @@ static void on_recv(void *handler_arg, esp_event_base_t base, int32_t id, void *
         return;
     }
     udp_msg_t *msg = (udp_msg_t *)event_data;
-    ESP_LOGI(TAG, "Received %d bytes from %s:%p", udp_remote_ipstr(msg->remote), udp_remote_port(msg->port), msg->len);
+    ESP_LOGI(TAG, "Received %d bytes from %s:%d", msg->len, udp_remote_ipstr(msg->remote), udp_remote_port(msg->remote));
     ESP_LOG_BUFFER_HEXDUMP(TAG, msg->payload, msg->len, ESP_LOG_INFO);
     free(msg->remote);
     free(msg->payload);
@@ -38,7 +40,7 @@ static void on_recv(void *handler_arg, esp_event_base_t base, int32_t id, void *
     if (udp_remote_eq(msg->remote, remote)) {
         // is saved remote
     }
-    udp_remote_free(remote);
+    free(remote);
 ```
 
 ### Send message
@@ -54,11 +56,11 @@ static void on_recv(void *handler_arg, esp_event_base_t base, int32_t id, void *
         if (msg.payload != NULL) {
             memcpy(msg.payload, str, msg.len);
             if (esp_event_post(UDP_EVENT, UDP_EVENT_SEND, &msg, sizeof(udp_msg_t), 20 / portTICK_PERIOD_MS) != ESP_OK) {
-                udp_remote_free(msg.remote);
+                free(msg.remote);
                 free(msg.payload);
             }
         } else {
-            udp_remote_free(msg.remote);
+            free(msg.remote);
         }
     }
 ```

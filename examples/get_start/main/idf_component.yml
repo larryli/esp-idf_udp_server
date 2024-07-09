@@ -1,0 +1,6 @@
+description: "Get start for UDP server"
+dependencies:
+  idf: '>=5.0'
+  larryli/esp-idf_udp_server:
+    version: '*'
+    override_path: '../../../'

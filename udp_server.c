@@ -11,7 +11,6 @@ static const char *TAG = "udp_server";
 ESP_EVENT_DEFINE_BASE(UDP_EVENT);
 
 typedef struct {
-    struct udp_pcb *pcb;
     ip_addr_t addr;
     uint16_t port;
 } remote_t;
@@ -21,7 +20,7 @@ static struct udp_pcb *pcb = NULL;
 static void udp_server_on_send(void *handler_arg, esp_event_base_t base,
                                int32_t id, void *event_data)
 {
-    if (event_data == NULL) {
+    if (pcb == NULL || event_data == NULL) {
         return;
     }
 
@@ -32,7 +31,7 @@ static void udp_server_on_send(void *handler_arg, esp_event_base_t base,
     ESP_LOGD(TAG, "Send %d bytes to %s:%d", send_pb->len,
              ipaddr_ntoa(&target->addr), target->port);
     ESP_LOG_BUFFER_HEXDUMP(TAG, send_pb->payload, send_pb->len, ESP_LOG_DEBUG);
-    udp_sendto(target->pcb, send_pb, &target->addr, target->port);
+    udp_sendto(pcb, send_pb, &target->addr, target->port);
     pbuf_free(send_pb);
 
     free(msg->remote);
@@ -42,7 +41,7 @@ static void udp_server_on_send(void *handler_arg, esp_event_base_t base,
 static void udp_server_on_broadcast(void *handler_arg, esp_event_base_t base,
                                     int32_t id, void *event_data)
 {
-    if (event_data == NULL) {
+    if (pcb == NULL || event_data == NULL) {
         return;
     }
 
@@ -81,7 +80,6 @@ static void udp_recv_proc(void *arg, struct udp_pcb *pcb, struct pbuf *pb,
             goto end;
         }
         remote_t *remote = (remote_t *)msg.remote;
-        remote->pcb = pcb;
         ip_addr_copy(remote->addr, *addr);
         remote->port = port;
         memcpy(msg.payload, this_pb->payload, this_pb->len);
@@ -175,18 +173,9 @@ void *udp_remote_clone(const void *remote)
     if (clone == NULL) {
         return NULL;
     }
-    clone->pcb = target->pcb;
     ip_addr_copy(clone->addr, target->addr);
     clone->port = target->port;
     return clone;
-}
-
-void udp_remote_free(void *remote)
-{
-    if (remote == NULL) {
-        return;
-    }
-    free(remote);
 }
 
 char *udp_remote_ipstr(const void *remote)
