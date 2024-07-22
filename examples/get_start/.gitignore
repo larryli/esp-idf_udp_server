@@ -1,3 +1,5 @@
+.vscode/
 build/
+dependencies.lock
 sdkconfig
-sdkconfig.old
+sdkconfig.old

@@ -1,7 +1,6 @@
-version: "1.0.0"
-description: "UDP Server component"
-url: "https://github.com/larryli/esp-idf_udp_server"
-repository: "https://github.com/larryli/esp-idf_udp_server"
-license: "MIT"
+description: UDP Server component
+url: https://github.com/larryli/esp-idf_udp_server
+repository: https://github.com/larryli/esp-idf_udp_server.git
+license: 'MIT'
 dependencies:
-  idf: ">=5.0"
+  idf: '>=5.0'

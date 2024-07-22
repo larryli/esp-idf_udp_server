@@ -4,6 +4,8 @@ Send & Receive messages on default event loop.
 
 ## Installation
 
+    idf.py add-dependency "larryli/udp_server"
+
 ## Getting Started
 
 ### Init & Deinit
