@@ -32,7 +32,6 @@ esp_err_t udp_server_deinit(void);
 
 bool udp_remote_eq(const void *remote1, const void *remote2);
 void *udp_remote_clone(const void *remote);
-void udp_remote_free(void *remote);
 char *udp_remote_ipstr(const void *remote);
 int udp_remote_port(const void *remote);
 
