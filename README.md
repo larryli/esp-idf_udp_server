@@ -11,7 +11,7 @@ Send & Receive messages on default event loop.
 ### Init & Deinit
 
 ```c
-#include "htpad_server.h"
+#include "udp_server.h"
 #define PORT 10000
     udp_server_init(PORT);
     udp_server_deinit();
